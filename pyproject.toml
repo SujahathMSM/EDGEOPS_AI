@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edgeops-ai"
+version = "0.1.0"
+description = "Evidence-backed operations through typed, capability-limited tools"
+requires-python = ">=3.11"
+dependencies = ["pydantic>=2.13,<3"]
+
+[project.scripts]
+edgeops-demo = "edgeops.demo:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
