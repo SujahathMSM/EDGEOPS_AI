@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EDGEOPS AI — Project Overview</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 24px 80px;
+    background: #0d1117; color: #e6edf3;
+    font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+    line-height: 1.5;
+  }
+  main { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 2rem; margin: 0 0 4px; }
+  h1 span { color: #58a6ff; }
+  .tag { color: #8b949e; margin-bottom: 8px; }
+  .lead { max-width: 72ch; color: #adbac7; margin-top: 12px; }
+  section { margin-top: 56px; }
+  h2 { font-size: 1.25rem; border-bottom: 1px solid #30363d; padding-bottom: 8px; }
+  h3 { font-size: 1rem; margin-top: 28px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .badge {
+    border: 1px solid #30363d; border-radius: 999px;
+    padding: 6px 14px; font-size: .85rem; color: #c9d1d9;
+  }
+  .badge b { color: #58a6ff; font-weight: 600; }
+
+  /* layer diagram */
+  .stack { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+  .layer {
+    border: 1px solid #30363d; border-radius: 10px;
+    padding: 14px 18px; display: flex; align-items: center; gap: 18px;
+    background: #161b22;
+  }
+  .layer .name { min-width: 150px; font-weight: 600; }
+  .layer .desc { color: #8b949e; font-size: .9rem; }
+  .layer.now  { border-color: #2ea043; }
+  .layer.now .name { color: #4ec965; }
+  .layer.later { opacity: .6; }
+  .layer.later .name { color: #f0883e; }
+  .pill { font-size: .7rem; letter-spacing: .5px; text-transform: uppercase;
+          padding: 2px 8px; border-radius: 999px; }
+  .pill.now { background: #12261e; color: #4ec965; border: 1px solid #2ea043; }
+  .pill.later { background: #2a1c10; color: #f0883e; border: 1px solid #f0883e; }
+  .arrow { align-self: center; text-align: center; color: #58a6ff; font-size: 1.1rem; }
+
+  /* execution pipeline */
+  .pipeline { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; align-items: stretch; }
+  .step {
+    border: 1px solid #30363d; border-radius: 10px; background: #161b22;
+    padding: 12px 14px; min-width: 150px; flex: 1 1 150px;
+  }
+  .step .n { color: #58a6ff; font-weight: 700; font-size: .8rem; }
+  .step .t { font-weight: 600; margin-top: 2px; }
+  .step .d { color: #8b949e; font-size: .82rem; margin-top: 4px; }
+  .step.audit { border-color: #a371f7; }
+  .step.audit .n { color: #a371f7; }
+
+  /* decision branch */
+  .branch { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+  .card { border: 1px solid #30363d; border-radius: 10px; padding: 14px 16px; background: #161b22; }
+  .card .label { font-weight: 700; }
+  .card.allow .label { color: #4ec965; }
+  .card.approve .label { color: #f0883e; }
+  .card.deny .label { color: #f85149; }
+  .card .d { color: #8b949e; font-size: .85rem; margin-top: 6px; }
+
+  /* roadmap */
+  .roadmap { margin-top: 16px; }
+  .r-item { display: flex; gap: 12px; padding: 6px 0; align-items: baseline; }
+  .r-num { min-width: 84px; font-weight: 700; color: #58a6ff; font-size: .85rem; }
+  .r-body { color: #c9d1d9; }
+  .r-item.done .r-body { color: #8b949e; }
+  .r-item.done .r-num::after { content: " ✅"; font-size: .8rem; }
+  .r-item.next .r-num { color: #f0883e; }
+  code { background: #21262d; border-radius: 5px; padding: 1px 6px; font-size: .85em; }
+</style>
+</head>
+<body>
+<main>
+  <h1><span>EDGEOPS</span> AI</h1>
+  <div class="tag">Evidence-backed operations through typed, capability-limited tools</div>
+  <p class="lead">
+    An AI-assisted operations platform: instead of giving an AI agent free shell access,
+    it investigates incidents through <b>strictly typed tools</b>, works only from
+    <b>collected evidence</b>, proposes fixes that <b>humans approve</b>, and verifies the result.
+    Deterministic tools collect facts · local models compress facts · stronger models reason only on escalation · humans approve changes.
+  </p>
+  <div class="badges">
+    <div class="badge">Target: <b>SRE / DevOps engineers</b>, Dockerized services, industrial systems (Modbus, BMS)</div>
+    <div class="badge">Stack: <b>Python 3.11+ · Pydantic 2 ·</b> future FastAPI + PostgreSQL/pgvector + local Ollama</div>
+    <div class="badge">Status: <b>Stage 1 complete</b> — typed tool foundation</div>
+  </div>
+
+  <section>
+    <h2>Layered architecture — what exists now vs. what's planned</h2>
+    <div class="stack">
+      <div class="layer later"><span class="name">Web UI / CLI / API</span><span class="pill later">later</span><span class="desc">FastAPI app, auth, RBAC, SSE updates</span></div>
+      <div class="layer later"><span class="name">Incident Engine</span><span class="pill later">later</span><span class="desc">Investigation state, timelines, hypotheses, verification</span></div>
+      <div class="layer later"><span class="name">Model Router + RAG</span><span class="pill later">later</span><span class="desc">NO_LLM → local LLM → cheap remote → Astra; pgvector knowledge base</span></div>
+      <div class="layer now"><span class="name">Tool Enforcement Core</span><span class="pill now">built · stage 1</span><span class="desc">Registry · Policy · Executor · Redaction · Audit — the safety boundary</span></div>
+      <div class="layer now"><span class="name">Demo Tools (synthetic)</span><span class="pill now">built · stage 1</span><span class="desc">get_demo_host_health · get_demo_disk_usage — fixture data, no real machine access</span></div>
+      <div class="layer later"><span class="name">Real Adapters</span><span class="pill later">later</span><span class="desc">Host / systemd → Docker → HTTP → Git → PostgreSQL → SSH agents</span></div>
+      <div class="layer later"><span class="name">Infra Targets</span><span class="pill later">later</span><span class="desc">Linux hosts, Docker services, apps, DBs, telemetry, Git, docs</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Every tool execution follows the same pipeline</h2>
+    <div class="pipeline">
+      <div class="step"><div class="n">1</div><div class="t">Request</div><div class="d">Trusted caller supplies Actor + ToolRequest</div></div>
+      <div class="step"><div class="n">2</div><div class="t">Validate</div><div class="d">Strict Pydantic, no unknown fields, no coercion</div></div>
+      <div class="step"><div class="n">3</div><div class="t">Resolve</div><div class="d">Registry lookup — unknown tool → error</div></div>
+      <div class="step"><div class="n">4</div><div class="t">Arguments</div><div class="d">Tool's input schema validates arguments</div></div>
+      <div class="step"><div class="n">5</div><div class="t">Policy</div><div class="d">Permission + exact target scope + risk level</div></div>
+      <div class="step"><div class="n">6</div><div class="t">Target check</div><div class="d">Tool-specific validator must return True</div></div>
+      <div class="step"><div class="n">7</div><div class="t">Execute</div><div class="d">Async adapter under cooperative timeout</div></div>
+      <div class="step"><div class="n">8</div><div class="t">Normalize</div><div class="d">Output revalidated, secrets recursively redacted</div></div>
+      <div class="step audit"><div class="n">9</div><div class="t">Audit</div><div class="d">Event on every path — success, failure, denial, cancel</div></div>
+      <div class="step audit"><div class="n">10</div><div class="t">Result</div><div class="d">Envelope with UTC time, duration, evidence + correlation IDs</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Policy decision — the heart of the safety design</h2>
+    <div class="branch">
+      <div class="card allow"><div class="label">Allow automatically</div><div class="d">READ_ONLY tools with the right permission and in-scope target (host, resource, environment)</div></div>
+      <div class="card approve"><div class="label">Require approval</div><div class="d">LOW / MEDIUM / HIGH risk actions → <code>APPROVAL_REQUIRED</code>. Nothing mutates anything in Stage 1</div></div>
+      <div class="card deny"><div class="label">Deny</div><div class="d">FORBIDDEN tools, missing permission, or out-of-scope target → <code>POLICY_DENIED</code></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The end-to-end vision: one incident, start to finish</h2>
+    <div class="pipeline">
+      <div class="step"><div class="n">A</div><div class="t">Symptom / alert</div><div class="d">"control-api returns 5xx after the last deploy"</div></div>
+      <div class="step"><div class="n">B</div><div class="t">Investigate</div><div class="d">Read-only tools collect bounded, timestamped evidence</div></div>
+      <div class="step"><div class="n">C</div><div class="t">Correlate</div><div class="d">UTC timelines + similar incidents via RAG memory</div></div>
+      <div class="step"><div class="n">D</div><div class="t">Hypothesize</div><div class="d">Model-assisted but evidence-linked, scored deterministically</div></div>
+      <div class="step"><div class="n">E</div><div class="t">Propose fix</div><div class="d">Typed minimal-risk action — never free-form shell</div></div>
+      <div class="step"><div class="n">F</div><div class="t">Approve</div><div class="d">Immutable approval bound to exact parameters + expiry</div></div>
+      <div class="step"><div class="n">G</div><div class="t">Execute + verify</div><div class="d">Idempotent action, then health checks confirm recovery</div></div>
+      <div class="step audit"><div class="n">H</div><div class="t">Record</div><div class="d">Incident memory + full audit trail for next time</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Roadmap — 17 stages</h2>
+    <div class="roadmap">
+      <div class="r-item done"><div class="r-num">Stage 0</div><div class="r-body">Baseline (partially deferred — no AeroIntel source in workspace)</div></div>
+      <div class="r-item done"><div class="r-num">Stage 1</div><div class="r-body">Typed tool foundation ← <b>you are here</b></div></div>
+      <div class="r-item next"><div class="r-num">Stage 2</div><div class="r-body">Read-only local host inspection (real machine, safe reads)</div></div>
+      <div class="r-item"><div class="r-num">Stages 3–4</div><div class="r-body">Docker inspection · service/HTTP health + stored evidence</div></div>
+      <div class="r-item"><div class="r-num">Stages 5–6</div><div class="r-body">Incident lifecycle &amp; timeline · RAG knowledge integration (pgvector)</div></div>
+      <div class="r-item"><div class="r-num">Stages 7–9</div><div class="r-body">Local LLM summarization (qwen3:4b) · deterministic model router · hypothesis engine</div></div>
+      <div class="r-item"><div class="r-num">Stage 10</div><div class="r-body">First controlled remediation: restart a dev container, with approval + verification</div></div>
+      <div class="r-item"><div class="r-num">Stages 11–12</div><div class="r-body">Read-only remote hosts · cheap-remote + Astra escalation with budgets</div></div>
+      <div class="r-item"><div class="r-num">Stages 13–16</div><div class="r-body">Workers, observability stack, event bus, deployment hardening</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Deliberately NOT in this project (the "prevent the chatbot" rules)</h2>
+    <div class="branch">
+      <div class="card deny"><div class="label">No arbitrary shell</div><div class="d">The design guards against this becoming an un-auditable AI shell runner</div></div>
+      <div class="card deny"><div class="label">No autonomous actions</div><div class="d">Models may propose actions but can never bypass policy or approval</div></div>
+      <div class="card deny"><div class="label">No undocumented causality</div><div class="d">Hypotheses must link evidence IDs; "root cause" requires verified recovery</div></div>
+      <div class="card deny"><div class="label">No premature scaling</div><div class="d">No Kubernetes, microservices, or message buses until real workload needs them</div></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
